@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>VideoCall</title>
+    <title>Dhoom Video</title>
+    <link rel="icon" type="image/png" href="/logo.png">
 
     <script src="/socket.io/socket.io.js"></script>
 
@@ -35,9 +36,18 @@
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: bold;
-        }
+             font-size: 22px;
+             font-weight: bold;
+             display: flex;
+             align-items: center;
+             gap: 10px;
+}
+
+.logo img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+}
 
         .logo span {
             color: #4f8cff;
@@ -213,13 +223,9 @@
 <header>
 
     <div class="logo">
-        📹 Video<span>Call</span>
+    <img src="/logo.svg" alt="Dhoom Video">
+    <span>Dhoom Video</span>
     </div>
-
-    <div class="status">
-        ● Ready
-    </div>
-
 </header>
 
 

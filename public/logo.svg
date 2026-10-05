@@ -1,0 +1,58 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00c6ff"/>
+      <stop offset="100%" stop-color="#2457ff"/>
+    </linearGradient>
+
+    <linearGradient id="orange" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ff7a00"/>
+      <stop offset="100%" stop-color="#ffd21c"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="500" height="500" rx="100" fill="#0b1020"/>
+
+  <!-- D -->
+  <path
+    d="M115 105 H255 C335 105 385 155 385 250
+       C385 345 335 395 255 395 H115 Z"
+    fill="url(#blue)"
+  />
+
+  <!-- Camera -->
+  <path
+    d="M345 175 L425 135 V365 L345 325 Z"
+    fill="#2463ff"
+  />
+
+  <!-- People -->
+  <circle cx="210" cy="205" r="35" fill="white"/>
+  <path
+    d="M150 325 C150 275 175 250 210 250
+       C245 250 270 275 270 325 Z"
+    fill="white"
+  />
+
+  <circle cx="275" cy="220" r="25" fill="#00bfff"/>
+  <path
+    d="M235 325 C235 285 252 265 275 265
+       C300 265 315 285 315 325 Z"
+    fill="#00bfff"
+  />
+
+  <!-- Dhoom swoosh -->
+  <path
+    d="M80 330 C135 425 325 455 410 335"
+    fill="none"
+    stroke="url(#orange)"
+    stroke-width="18"
+    stroke-linecap="round"
+  />
+
+  <!-- Play symbol -->
+  <polygon
+    points="305,230 305,290 350,260"
+    fill="white"
+  />
+</svg>
