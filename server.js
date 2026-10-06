@@ -8,81 +8,184 @@ const io = new Server(server);
 
 app.use(express.static("public"));
 
-const rooms = {};
-
 io.on("connection", (socket) => {
 
     console.log("User connected:", socket.id);
 
 
+    // =========================
     // JOIN ROOM
+    // =========================
+
     socket.on("join-room", (roomId) => {
+
+        const room = io.sockets.adapter.rooms.get(roomId);
+        const userCount = room ? room.size : 0;
+
+
+        // Maximum 2 users
+        if (userCount >= 2) {
+
+            socket.emit("room-full");
+
+            console.log(`Room ${roomId} is full`);
+
+            return;
+        }
+
 
         socket.join(roomId);
 
-        const room = io.sockets.adapter.rooms.get(roomId);
+        socket.data.roomId = roomId;
 
-        const userCount = room ? room.size : 0;
 
         console.log(
             `User ${socket.id} joined room ${roomId}`
         );
 
 
-        // Agar room me pehle se ek user hai
-        if (userCount === 2) {
+        const updatedRoom =
+            io.sockets.adapter.rooms.get(roomId);
 
-            socket.to(roomId).emit("user-joined");
+        const updatedCount =
+            updatedRoom ? updatedRoom.size : 0;
+
+
+        // Second user joined
+        if (updatedCount === 2) {
+
+            socket.to(roomId).emit(
+                "user-joined"
+            );
 
         }
 
     });
 
 
-    // OFFER
-    socket.on("offer", ({ roomId, offer }) => {
+    // =========================
+    // WEBRTC OFFER
+    // =========================
 
-        socket.to(roomId).emit("offer", offer);
+    socket.on(
+        "offer",
+        ({ roomId, offer }) => {
 
-    });
+            socket.to(roomId).emit(
+                "offer",
+                offer
+            );
+
+        }
+    );
 
 
-    // ANSWER
-    socket.on("answer", ({ roomId, answer }) => {
+    // =========================
+    // WEBRTC ANSWER
+    // =========================
 
-        socket.to(roomId).emit("answer", answer);
+    socket.on(
+        "answer",
+        ({ roomId, answer }) => {
 
-    });
+            socket.to(roomId).emit(
+                "answer",
+                answer
+            );
+
+        }
+    );
 
 
+    // =========================
     // ICE CANDIDATE
-    socket.on("ice-candidate", ({ roomId, candidate }) => {
+    // =========================
 
-        socket.to(roomId).emit(
-            "ice-candidate",
-            candidate
-        );
+    socket.on(
+        "ice-candidate",
+        ({ roomId, candidate }) => {
 
-    });
+            socket.to(roomId).emit(
+                "ice-candidate",
+                candidate
+            );
+
+        }
+    );
 
 
+    // =========================
+    // CHAT MESSAGE
+    // =========================
+
+    socket.on(
+        "chat-message",
+        ({ roomId, message }) => {
+
+            // Message sirf room ke doosre user ko bhejna
+            socket.to(roomId).emit(
+                "chat-message",
+                {
+                    message: message,
+                    senderId: socket.id,
+                    time: new Date().toLocaleTimeString(
+                        "en-IN",
+                        {
+                            hour: "2-digit",
+                            minute: "2-digit"
+                        }
+                    )
+                }
+            );
+
+        }
+    );
+
+
+    // =========================
     // END CALL
-    socket.on("end-call", (roomId) => {
+    // =========================
 
-        socket.to(roomId).emit("end-call");
+    socket.on(
+        "end-call",
+        (roomId) => {
 
-    });
+            socket.to(roomId).emit(
+                "end-call"
+            );
+
+        }
+    );
 
 
+    // =========================
     // DISCONNECT
-    socket.on("disconnect", () => {
+    // =========================
 
-        console.log(
-            "User disconnected:",
-            socket.id
-        );
+    socket.on(
+        "disconnect",
+        () => {
 
-    });
+            const roomId =
+                socket.data.roomId;
+
+
+            if (roomId) {
+
+                socket.to(roomId).emit(
+                    "user-left"
+                );
+
+            }
+
+
+            console.log(
+                "User disconnected:",
+                socket.id
+            );
+
+        }
+    );
 
 });
 
