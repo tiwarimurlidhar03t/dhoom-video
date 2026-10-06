@@ -2,18 +2,29 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
     <title>Dhoom Video</title>
-    <link rel="icon" type="image/png" href="/logo.png">
+
+    <link
+        rel="icon"
+        type="image/svg+xml"
+        href="/logo.svg">
 
     <script src="/socket.io/socket.io.js"></script>
 
+
     <style>
+
         * {
             box-sizing: border-box;
         }
+
 
         body {
             margin: 0;
@@ -23,7 +34,10 @@
             min-height: 100vh;
         }
 
-        /* HEADER */
+
+        /* =========================
+           HEADER
+        ========================= */
 
         header {
             height: 70px;
@@ -35,43 +49,71 @@
             background: #101522;
         }
 
-        .logo {
-             font-size: 22px;
-             font-weight: bold;
-             display: flex;
-             align-items: center;
-             gap: 10px;
-}
 
-.logo img {
-    width: 38px;
-    height: 38px;
-    object-fit: contain;
-}
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
+        .logo img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
 
         .logo span {
             color: #4f8cff;
         }
 
+
         .status {
             color: #22c55e;
             font-size: 14px;
+            font-weight: 600;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.25);
         }
 
-        /* ROOM AREA */
+
+        /* =========================
+           ROOM PANEL
+        ========================= */
 
         .room-panel {
             max-width: 850px;
-            margin: 25px auto;
-            padding: 20px;
-            background: #121927;
-            border: 1px solid #202938;
-            border-radius: 15px;
+            margin: 30px auto;
+            padding: 25px;
+            background: linear-gradient(
+                145deg,
+                #121927,
+                #0f1624
+            );
+            border: 1px solid #263146;
+            border-radius: 18px;
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.35);
         }
+
 
         .room-panel h2 {
             margin-top: 0;
         }
+
+
+        .tagline {
+            margin-top: -10px;
+            margin-bottom: 18px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
 
         .room-controls {
             display: flex;
@@ -79,41 +121,117 @@
             flex-wrap: wrap;
         }
 
+
         input {
             flex: 1;
             min-width: 180px;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 12px 14px;
+            border-radius: 10px;
             border: 1px solid #303b4f;
             background: #0b0f19;
             color: white;
             font-size: 15px;
+            outline: none;
+            transition: 0.2s ease;
         }
+
+
+        input::placeholder {
+            color: #6b7280;
+        }
+
+
+        input:focus {
+            border-color: #4f8cff;
+            box-shadow:
+                0 0 0 3px
+                rgba(79, 140, 255, 0.15);
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
 
         button {
             border: none;
-            border-radius: 8px;
-            padding: 12px 17px;
+            border-radius: 10px;
+            padding: 12px 18px;
             cursor: pointer;
             color: white;
-            background: #2563eb;
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f8cff
+                );
             font-size: 15px;
+            font-weight: 600;
+            transition: 0.2s ease;
+            box-shadow:
+                0 4px 12px
+                rgba(37, 99, 235, 0.25);
         }
 
+
         button:hover {
-            opacity: 0.85;
+            transform: translateY(-2px);
+            box-shadow:
+                0 6px 18px
+                rgba(37, 99, 235, 0.35);
         }
+
+
+        button:active {
+            transform: translateY(0);
+        }
+
 
         button:disabled {
             opacity: 0.45;
             cursor: not-allowed;
         }
 
+
+        /* COPY BUTTON */
+
         #copyBtn {
             background: #059669;
         }
 
-        /* VIDEOS */
+
+        .copy-btn {
+            transition: 0.2s ease;
+        }
+
+
+        .copy-btn:hover {
+            background: #10b981;
+        }
+
+
+        /* =========================
+           ROOM STATUS
+        ========================= */
+
+        #roomStatus {
+            margin-top: 14px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            background:
+                rgba(79, 140, 255, 0.08);
+            border:
+                1px solid
+                rgba(79, 140, 255, 0.18);
+            color: #b8c7e6;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+
+        /* =========================
+           VIDEOS
+        ========================= */
 
         .videos {
             max-width: 1100px;
@@ -124,13 +242,27 @@
             gap: 20px;
         }
 
+
         .video-card {
             position: relative;
             background: #121927;
-            border-radius: 15px;
+            border-radius: 18px;
             overflow: hidden;
-            border: 1px solid #202938;
+            border: 1px solid #263146;
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.3);
+            transition: 0.2s ease;
         }
+
+
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 14px 35px
+                rgba(0, 0, 0, 0.4);
+        }
+
 
         .video-card video {
             width: 100%;
@@ -140,17 +272,34 @@
             background: #05070b;
         }
 
+
+        /* MIRROR ONLY MY CAMERA */
+
+        #myVideo {
+            transform: scaleX(-1);
+        }
+
+
         .video-label {
             position: absolute;
             bottom: 12px;
             left: 12px;
-            background: rgba(0, 0, 0, 0.65);
-            padding: 8px 12px;
-            border-radius: 7px;
+            background:
+                rgba(8, 12, 22, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 8px 13px;
+            border-radius: 9px;
             font-size: 14px;
+            font-weight: 600;
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.08);
         }
 
-        /* CONTROLS */
+
+        /* =========================
+           CALL CONTROLS
+        ========================= */
 
         .controls {
             position: fixed;
@@ -158,787 +307,1099 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            gap: 10px;
-            padding: 12px;
-            background: #121927;
-            border: 1px solid #263146;
-            border-radius: 14px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            gap: 12px;
+            padding: 14px;
+            background:
+                rgba(18, 25, 39, 0.92);
+            backdrop-filter: blur(12px);
+            border: 1px solid #303b50;
+            border-radius: 18px;
+            box-shadow:
+                0 12px 35px
+                rgba(0, 0, 0, 0.45);
+            z-index: 100;
         }
 
+
         .control-btn {
-            width: 50px;
-            height: 50px;
+            width: 52px;
+            height: 52px;
             padding: 0;
             border-radius: 50%;
             background: #293347;
             font-size: 19px;
+            border: 1px solid #3a465c;
+            box-shadow:
+                0 5px 15px
+                rgba(0, 0, 0, 0.25);
+            transition: 0.2s ease;
         }
+
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            background: #364258;
+            box-shadow:
+                0 8px 20px
+                rgba(0, 0, 0, 0.35);
+        }
+
 
         #startBtn {
             background: #2563eb;
         }
 
+
+        .start-camera-btn {
+            width: 80px;
+            border-radius: 26px;
+            font-size: 15px;
+        }
+
+
         #endBtn {
             background: #dc2626;
         }
 
-        #roomStatus {
-            margin-top: 12px;
-            color: #9ca3af;
-            font-size: 14px;
-        }
 
-        /* MOBILE */
+        /* =========================
+           MOBILE
+        ========================= */
 
         @media (max-width: 700px) {
 
             header {
+                height: 60px;
                 padding: 0 15px;
             }
 
-            .videos {
-                grid-template-columns: 1fr;
+
+            .logo {
+                font-size: 18px;
+                gap: 7px;
             }
 
-            .video-card video {
-                height: 260px;
+
+            .logo img {
+                width: 32px;
+                height: 32px;
             }
 
-            .controls {
-                bottom: 15px;
+
+            .status {
+                font-size: 12px;
+                padding: 6px 9px;
             }
+
 
             .room-panel {
-                margin: 15px;
+                margin: 15px 12px;
+                padding: 15px;
             }
+
+
+            .room-panel h2 {
+                font-size: 20px;
+            }
+
+
+            .room-controls {
+                flex-direction: column;
+            }
+
+
+            input,
+            .room-controls button {
+                width: 100%;
+            }
+
+
+            .videos {
+                grid-template-columns: 1fr;
+                padding: 5px 12px;
+                gap: 12px;
+            }
+
+
+            .video-card video {
+                height: 250px;
+            }
+
+
+            .controls {
+                bottom: 12px;
+                gap: 7px;
+                padding: 9px;
+            }
+
+
+            .control-btn {
+                width: 45px;
+                height: 45px;
+                font-size: 17px;
+            }
+
+
+            .start-camera-btn {
+                width: 72px;
+            }
+
         }
+
     </style>
+
 </head>
 
 
 <body>
 
 
-<header>
+    <!-- =========================
+         HEADER
+    ========================== -->
 
-    <div class="logo">
-    <img src="/logo.svg" alt="Dhoom Video">
-    <span>Dhoom Video</span>
-    </div>
-</header>
+    <header>
 
+        <div class="logo">
 
-<!-- ROOM PANEL -->
+            <img
+                src="/logo.svg"
+                alt="Dhoom Video">
 
-<div class="room-panel">
+            <span>Dhoom Video</span>
 
-    <h2>Start a Meeting</h2>
-
-    <div class="room-controls">
-
-        <button id="createBtn">
-            ➕ Create Room
-        </button>
-
-        <input
-            id="roomInput"
-            type="text"
-            placeholder="Enter Room ID"
-        >
-
-        <button id="joinBtn">
-            Join Room
-        </button>
-
-        <button id="copyBtn" disabled>
-            🔗 Copy Link
-        </button>
-
-    </div>
-
-    <div id="roomStatus">
-        Create a room or enter a Room ID to join.
-    </div>
-
-</div>
+        </div>
 
 
-<!-- VIDEO AREA -->
+        <div class="status">
+            🔒 Secure
+        </div>
 
-<div class="videos">
+    </header>
 
 
-    <div class="video-card">
 
-        <video
-            id="myVideo"
-            autoplay
-            muted
-            playsinline>
-        </video>
+    <!-- =========================
+         ROOM PANEL
+    ========================== -->
 
-        <div class="video-label">
-            👤 You
+    <div class="room-panel">
+
+        <h2>
+            Connect. Call. Dhoom! 🎥
+        </h2>
+
+
+        <p class="tagline">
+            Connect. Call. Dhoom!
+        </p>
+
+
+        <div class="room-controls">
+
+
+            <button id="createBtn">
+
+                ➕ Create Room
+
+            </button>
+
+
+            <input
+                id="roomInput"
+                type="text"
+                placeholder="Enter Room ID">
+
+
+            <button id="joinBtn">
+
+                Join Room
+
+            </button>
+
+
+            <button
+                id="copyBtn"
+                class="copy-btn"
+                disabled
+                title="Copy invitation link">
+
+                🔗 Copy Link
+
+            </button>
+
+
+        </div>
+
+
+        <div id="roomStatus">
+
+            Create a room or enter a Room ID to join.
+
         </div>
 
     </div>
 
 
-    <div class="video-card">
 
-        <video
-            id="remoteVideo"
-            autoplay
-            playsinline>
-        </video>
+    <!-- =========================
+         VIDEO AREA
+    ========================== -->
 
-        <div class="video-label">
-            👤 Other Person
+    <div class="videos">
+
+
+        <div class="video-card">
+
+            <video
+                id="myVideo"
+                autoplay
+                muted
+                playsinline>
+            </video>
+
+
+            <div class="video-label">
+
+                👤 You
+
+            </div>
+
+        </div>
+
+
+
+        <div class="video-card">
+
+            <video
+                id="remoteVideo"
+                autoplay
+                playsinline>
+            </video>
+
+
+            <div class="video-label">
+
+                👤 Other Person
+
+            </div>
+
         </div>
 
     </div>
 
 
-</div>
 
+    <!-- =========================
+         CONTROLS
+    ========================== -->
 
-<!-- CONTROLS -->
+    <div class="controls">
 
-<div class="controls">
 
-    <button
-        id="startBtn"
-        class="control-btn"
-        title="Start Camera">
-        🎥
-    </button>
+        <button
+            id="startBtn"
+            class="control-btn start-camera-btn"
+            title="Start Camera">
 
-    <button
-        id="muteBtn"
-        class="control-btn"
-        disabled
-        title="Mute">
-        🎤
-    </button>
+            🎥
+            <span>Start</span>
 
-    <button
-        id="cameraBtn"
-        class="control-btn"
-        disabled
-        title="Camera">
-        📹
-    </button>
+        </button>
 
-    <button
-        id="endBtn"
-        class="control-btn"
-        disabled
-        title="End Call">
-        📞
-    </button>
 
-</div>
+        <button
+            id="muteBtn"
+            class="control-btn"
+            disabled
+            title="Mute">
 
+            🎤
 
-<script>
+        </button>
 
-const socket = io();
 
-const myVideo =
-    document.getElementById("myVideo");
+        <button
+            id="cameraBtn"
+            class="control-btn"
+            disabled
+            title="Camera">
 
-const remoteVideo =
-    document.getElementById("remoteVideo");
+            📹
 
-const startBtn =
-    document.getElementById("startBtn");
+        </button>
 
-const muteBtn =
-    document.getElementById("muteBtn");
 
-const cameraBtn =
-    document.getElementById("cameraBtn");
+        <button
+            id="endBtn"
+            class="control-btn"
+            disabled
+            title="End Call">
 
-const endBtn =
-    document.getElementById("endBtn");
+            📞
 
-const createBtn =
-    document.getElementById("createBtn");
+        </button>
 
-const joinBtn =
-    document.getElementById("joinBtn");
+    </div>
 
-const copyBtn =
-    document.getElementById("copyBtn");
 
-const roomInput =
-    document.getElementById("roomInput");
 
-const roomStatus =
-    document.getElementById("roomStatus");
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
 
+    <script>
 
-let localStream = null;
 
-let peerConnection = null;
+        const socket = io();
 
-let roomId = null;
 
-let microphoneOn = true;
+        const myVideo =
+            document.getElementById("myVideo");
 
-let cameraOn = true;
 
+        const remoteVideo =
+            document.getElementById("remoteVideo");
 
-const configuration = {
 
-    iceServers: [
+        const startBtn =
+            document.getElementById("startBtn");
 
-        {
-            urls:
-                "stun:stun.l.google.com:19302"
-        }
 
-    ]
+        const muteBtn =
+            document.getElementById("muteBtn");
 
-};
 
+        const cameraBtn =
+            document.getElementById("cameraBtn");
 
-// CREATE ROOM
 
-createBtn.addEventListener(
-    "click",
-    () => {
+        const endBtn =
+            document.getElementById("endBtn");
 
-        roomId =
-            Math.random()
-            .toString(36)
-            .substring(2, 8)
-            .toUpperCase();
 
-        roomInput.value =
-            roomId;
+        const createBtn =
+            document.getElementById("createBtn");
 
-        roomStatus.innerText =
-            "Room created: " + roomId;
 
-        copyBtn.disabled =
-            false;
+        const joinBtn =
+            document.getElementById("joinBtn");
 
-    }
-);
 
+        const copyBtn =
+            document.getElementById("copyBtn");
 
-// JOIN ROOM
 
-joinBtn.addEventListener(
-    "click",
-    () => {
+        const roomInput =
+            document.getElementById("roomInput");
 
-        const id =
-            roomInput.value.trim();
 
-        if (!id) {
+        const roomStatus =
+            document.getElementById("roomStatus");
 
-            alert(
-                "Room ID enter karo."
-            );
 
-            return;
 
-        }
+        let localStream = null;
 
-        roomId =
-            id.toUpperCase();
+        let peerConnection = null;
 
-        roomInput.value =
-            roomId;
+        let roomId = null;
 
-        socket.emit(
-            "join-room",
-            roomId
-        );
+        let microphoneOn = true;
 
-        roomStatus.innerText =
-            "Joined Room: " + roomId;
+        let cameraOn = true;
 
-        copyBtn.disabled =
-            false;
 
-    }
-);
 
+        /* =========================
+           WEBRTC CONFIGURATION
+        ========================== */
 
-// COPY LINK
+        const configuration = {
 
-copyBtn.addEventListener(
-    "click",
-    async () => {
+            iceServers: [
 
-        if (!roomId)
-            return;
+                {
+                    urls:
+                        "stun:stun.l.google.com:19302"
+                }
 
-        const inviteLink =
-            window.location.origin +
-            "?room=" +
-            roomId;
-
-        try {
-
-            await navigator.clipboard
-                .writeText(inviteLink);
-
-            copyBtn.innerText =
-                "✅ Copied";
-
-            setTimeout(
-                () => {
-
-                    copyBtn.innerText =
-                        "🔗 Copy Link";
-
-                },
-                2000
-            );
-
-        }
-
-        catch (error) {
-
-            alert(
-                "Link copy nahi ho saka."
-            );
-
-        }
-
-    }
-);
-
-
-// AUTO ROOM FROM LINK
-
-const urlParams =
-    new URLSearchParams(
-        window.location.search
-    );
-
-const roomFromLink =
-    urlParams.get("room");
-
-
-if (roomFromLink) {
-
-    roomId =
-        roomFromLink.toUpperCase();
-
-    roomInput.value =
-        roomId;
-
-    roomStatus.innerText =
-        "Room link detected. Click Join Room.";
-
-}
-
-
-// START CAMERA
-
-startBtn.addEventListener(
-    "click",
-    async () => {
-
-        try {
-
-            localStream =
-                await navigator.mediaDevices
-                .getUserMedia({
-
-                    video: true,
-                    audio: true
-
-                });
-
-            myVideo.srcObject =
-                localStream;
-
-            startBtn.disabled =
-                true;
-
-            muteBtn.disabled =
-                false;
-
-            cameraBtn.disabled =
-                false;
-
-            endBtn.disabled =
-                false;
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-            alert(
-                "Camera aur microphone permission allow karo."
-            );
-
-        }
-
-    }
-);
-
-
-// USER JOINED
-
-socket.on(
-    "user-joined",
-    async () => {
-
-        if (!localStream) {
-
-            alert(
-                "Pehle camera start karo."
-            );
-
-            return;
-
-        }
-
-        createPeerConnection();
-
-        const offer =
-            await peerConnection
-            .createOffer();
-
-        await peerConnection
-            .setLocalDescription(
-                offer
-            );
-
-        socket.emit(
-            "offer",
-            {
-                roomId: roomId,
-                offer: offer
-            }
-        );
-
-    }
-);
-
-
-// RECEIVE OFFER
-
-socket.on(
-    "offer",
-    async (offer) => {
-
-        if (!localStream)
-            return;
-
-        createPeerConnection();
-
-        await peerConnection
-            .setRemoteDescription(
-                new RTCSessionDescription(
-                    offer
-                )
-            );
-
-        const answer =
-            await peerConnection
-            .createAnswer();
-
-        await peerConnection
-            .setLocalDescription(
-                answer
-            );
-
-        socket.emit(
-            "answer",
-            {
-                roomId: roomId,
-                answer: answer
-            }
-        );
-
-    }
-);
-
-
-// RECEIVE ANSWER
-
-socket.on(
-    "answer",
-    async (answer) => {
-
-        if (!peerConnection)
-            return;
-
-        await peerConnection
-            .setRemoteDescription(
-                new RTCSessionDescription(
-                    answer
-                )
-            );
-
-    }
-);
-
-
-// ICE CANDIDATE
-
-socket.on(
-    "ice-candidate",
-    async (candidate) => {
-
-        if (!peerConnection)
-            return;
-
-        try {
-
-            await peerConnection
-                .addIceCandidate(
-                    new RTCIceCandidate(
-                        candidate
-                    )
-                );
-
-        }
-
-        catch (error) {
-
-            console.error(error);
-
-        }
-
-    }
-);
-
-
-// CREATE PEER CONNECTION
-
-function createPeerConnection() {
-
-    peerConnection =
-        new RTCPeerConnection(
-            configuration
-        );
-
-
-    localStream
-        .getTracks()
-        .forEach(
-            track => {
-
-                peerConnection.addTrack(
-                    track,
-                    localStream
-                );
-
-            }
-        );
-
-
-    peerConnection.ontrack =
-        event => {
-
-            remoteVideo.srcObject =
-                event.streams[0];
+            ]
 
         };
 
 
-    peerConnection.onicecandidate =
-        event => {
 
-            if (event.candidate) {
+        /* =========================
+           CREATE ROOM
+        ========================== */
+
+        createBtn.addEventListener(
+            "click",
+            () => {
+
+                roomId =
+                    Math.random()
+                    .toString(36)
+                    .substring(2, 8)
+                    .toUpperCase();
+
+
+                roomInput.value =
+                    roomId;
+
+
+                /*
+                 * Automatically join room
+                 */
 
                 socket.emit(
-                    "ice-candidate",
-                    {
-                        roomId:
-                            roomId,
+                    "join-room",
+                    roomId
+                );
 
-                        candidate:
-                            event.candidate
+
+                roomStatus.innerText =
+                    "Room created & joined: "
+                    + roomId;
+
+
+                copyBtn.disabled =
+                    false;
+
+            }
+        );
+
+
+
+        /* =========================
+           JOIN ROOM
+        ========================== */
+
+        joinBtn.addEventListener(
+            "click",
+            () => {
+
+                const id =
+                    roomInput.value.trim();
+
+
+                if (!id) {
+
+                    alert(
+                        "Room ID enter karo."
+                    );
+
+                    return;
+
+                }
+
+
+                roomId =
+                    id.toUpperCase();
+
+
+                roomInput.value =
+                    roomId;
+
+
+                socket.emit(
+                    "join-room",
+                    roomId
+                );
+
+
+                roomStatus.innerText =
+                    "Joined Room: "
+                    + roomId;
+
+
+                copyBtn.disabled =
+                    false;
+
+            }
+        );
+
+
+
+        /* =========================
+           COPY LINK
+        ========================== */
+
+        copyBtn.addEventListener(
+            "click",
+            async () => {
+
+                if (!roomId)
+                    return;
+
+
+                const inviteLink =
+                    window.location.origin
+                    + "?room="
+                    + roomId;
+
+
+                try {
+
+                    await navigator.clipboard
+                        .writeText(inviteLink);
+
+
+                    copyBtn.innerText =
+                        "✅ Copied";
+
+
+                    setTimeout(
+                        () => {
+
+                            copyBtn.innerText =
+                                "🔗 Copy Link";
+
+                        },
+                        2000
+                    );
+
+                }
+
+
+                catch (error) {
+
+                    alert(
+                        "Link copy nahi ho saka."
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           ROOM FROM URL
+        ========================== */
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const roomFromLink =
+            urlParams.get("room");
+
+
+        if (roomFromLink) {
+
+            roomId =
+                roomFromLink.toUpperCase();
+
+
+            roomInput.value =
+                roomId;
+
+
+            roomStatus.innerText =
+                "Room link detected. Click Join Room.";
+
+
+            copyBtn.disabled =
+                false;
+
+        }
+
+
+
+        /* =========================
+           START CAMERA
+        ========================== */
+
+        startBtn.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    localStream =
+                        await navigator
+                        .mediaDevices
+                        .getUserMedia({
+
+                            video: true,
+
+                            audio: true
+
+                        });
+
+
+                    myVideo.srcObject =
+                        localStream;
+
+
+                    startBtn.disabled =
+                        true;
+
+
+                    muteBtn.disabled =
+                        false;
+
+
+                    cameraBtn.disabled =
+                        false;
+
+
+                    endBtn.disabled =
+                        false;
+
+                }
+
+
+                catch (error) {
+
+                    console.error(error);
+
+
+                    alert(
+                        "Camera aur microphone permission allow karo."
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           USER JOINED
+        ========================== */
+
+        socket.on(
+            "user-joined",
+            async () => {
+
+                if (!localStream) {
+
+                    alert(
+                        "Pehle camera start karo."
+                    );
+
+                    return;
+
+                }
+
+
+                createPeerConnection();
+
+
+                const offer =
+                    await peerConnection
+                    .createOffer();
+
+
+                await peerConnection
+                    .setLocalDescription(
+                        offer
+                    );
+
+
+                socket.emit(
+                    "offer",
+                    {
+
+                        roomId: roomId,
+
+                        offer: offer
+
                     }
                 );
 
             }
-
-        };
-
-}
+        );
 
 
-// MUTE
 
-muteBtn.addEventListener(
-    "click",
-    () => {
+        /* =========================
+           RECEIVE OFFER
+        ========================== */
 
-        if (!localStream)
-            return;
+        socket.on(
+            "offer",
+            async (offer) => {
 
-        const audioTrack =
+                if (!localStream)
+                    return;
+
+
+                createPeerConnection();
+
+
+                await peerConnection
+                    .setRemoteDescription(
+                        new RTCSessionDescription(
+                            offer
+                        )
+                    );
+
+
+                const answer =
+                    await peerConnection
+                    .createAnswer();
+
+
+                await peerConnection
+                    .setLocalDescription(
+                        answer
+                    );
+
+
+                socket.emit(
+                    "answer",
+                    {
+
+                        roomId: roomId,
+
+                        answer: answer
+
+                    }
+                );
+
+            }
+        );
+
+
+
+        /* =========================
+           RECEIVE ANSWER
+        ========================== */
+
+        socket.on(
+            "answer",
+            async (answer) => {
+
+                if (!peerConnection)
+                    return;
+
+
+                await peerConnection
+                    .setRemoteDescription(
+                        new RTCSessionDescription(
+                            answer
+                        )
+                    );
+
+            }
+        );
+
+
+
+        /* =========================
+           ICE CANDIDATE
+        ========================== */
+
+        socket.on(
+            "ice-candidate",
+            async (candidate) => {
+
+                if (!peerConnection)
+                    return;
+
+
+                try {
+
+                    await peerConnection
+                        .addIceCandidate(
+                            new RTCIceCandidate(
+                                candidate
+                            )
+                        );
+
+                }
+
+
+                catch (error) {
+
+                    console.error(error);
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           CREATE PEER CONNECTION
+        ========================== */
+
+        function createPeerConnection() {
+
+            peerConnection =
+                new RTCPeerConnection(
+                    configuration
+                );
+
+
             localStream
-            .getAudioTracks()[0];
+                .getTracks()
+                .forEach(
+                    track => {
 
-        if (!audioTrack)
-            return;
+                        peerConnection.addTrack(
+                            track,
+                            localStream
+                        );
 
-        microphoneOn =
-            !microphoneOn;
-
-        audioTrack.enabled =
-            microphoneOn;
-
-        muteBtn.innerText =
-            microphoneOn
-            ? "🎤"
-            : "🔇";
-
-        muteBtn.title =
-            microphoneOn
-            ? "Mute"
-            : "Unmute";
-
-    }
-);
+                    }
+                );
 
 
-// CAMERA
+            peerConnection.ontrack =
+                event => {
 
-cameraBtn.addEventListener(
-    "click",
-    () => {
+                    remoteVideo.srcObject =
+                        event.streams[0];
 
-        if (!localStream)
-            return;
-
-        const videoTrack =
-            localStream
-            .getVideoTracks()[0];
-
-        if (!videoTrack)
-            return;
-
-        cameraOn =
-            !cameraOn;
-
-        videoTrack.enabled =
-            cameraOn;
-
-        cameraBtn.innerText =
-            cameraOn
-            ? "📹"
-            : "🚫";
-
-        cameraBtn.title =
-            cameraOn
-            ? "Camera Off"
-            : "Camera On";
-
-    }
-);
+                };
 
 
-// END CALL
+            peerConnection.onicecandidate =
+                event => {
 
-endBtn.addEventListener(
-    "click",
-    () => {
+                    if (event.candidate) {
 
-        endCall();
+                        socket.emit(
+                            "ice-candidate",
+                            {
 
-        if (roomId) {
+                                roomId:
+                                    roomId,
 
-            socket.emit(
-                "end-call",
-                roomId
-            );
+                                candidate:
+                                    event.candidate
+
+                            }
+                        );
+
+                    }
+
+                };
 
         }
 
-    }
-);
 
 
-// OTHER USER ENDED CALL
+        /* =========================
+           MUTE
+        ========================== */
 
-socket.on(
-    "end-call",
-    () => {
+        muteBtn.addEventListener(
+            "click",
+            () => {
 
-        endCall();
-
-    }
-);
-
-
-// END CALL FUNCTION
-
-function endCall() {
-
-    if (localStream) {
-
-        localStream
-            .getTracks()
-            .forEach(
-                track =>
-                    track.stop()
-            );
-
-    }
+                if (!localStream)
+                    return;
 
 
-    if (peerConnection) {
-
-        peerConnection.close();
-
-        peerConnection =
-            null;
-
-    }
+                const audioTrack =
+                    localStream
+                    .getAudioTracks()[0];
 
 
-    myVideo.srcObject =
-        null;
-
-    remoteVideo.srcObject =
-        null;
+                if (!audioTrack)
+                    return;
 
 
-    startBtn.disabled =
-        false;
-
-    muteBtn.disabled =
-        true;
-
-    cameraBtn.disabled =
-        true;
-
-    endBtn.disabled =
-        true;
+                microphoneOn =
+                    !microphoneOn;
 
 
-    microphoneOn =
-        true;
-
-    cameraOn =
-        true;
+                audioTrack.enabled =
+                    microphoneOn;
 
 
-    muteBtn.innerText =
-        "🎤";
+                muteBtn.innerText =
+                    microphoneOn
+                    ? "🎤"
+                    : "🔇";
 
-    cameraBtn.innerText =
-        "📹";
 
-}
+                muteBtn.title =
+                    microphoneOn
+                    ? "Mute"
+                    : "Unmute";
 
-</script>
+            }
+        );
+
+
+
+        /* =========================
+           CAMERA
+        ========================== */
+
+        cameraBtn.addEventListener(
+            "click",
+            () => {
+
+                if (!localStream)
+                    return;
+
+
+                const videoTrack =
+                    localStream
+                    .getVideoTracks()[0];
+
+
+                if (!videoTrack)
+                    return;
+
+
+                cameraOn =
+                    !cameraOn;
+
+
+                videoTrack.enabled =
+                    cameraOn;
+
+
+                cameraBtn.innerText =
+                    cameraOn
+                    ? "📹"
+                    : "🚫";
+
+
+                cameraBtn.title =
+                    cameraOn
+                    ? "Camera Off"
+                    : "Camera On";
+
+            }
+        );
+
+
+
+        /* =========================
+           END CALL
+        ========================== */
+
+        endBtn.addEventListener(
+            "click",
+            () => {
+
+                endCall();
+
+
+                if (roomId) {
+
+                    socket.emit(
+                        "end-call",
+                        roomId
+                    );
+
+                }
+
+            }
+        );
+
+
+
+        /* =========================
+           OTHER USER ENDED CALL
+        ========================== */
+
+        socket.on(
+            "end-call",
+            () => {
+
+                endCall();
+
+            }
+        );
+
+
+
+        /* =========================
+           END CALL FUNCTION
+        ========================== */
+
+        function endCall() {
+
+            if (localStream) {
+
+                localStream
+                    .getTracks()
+                    .forEach(
+                        track =>
+                            track.stop()
+                    );
+
+            }
+
+
+            if (peerConnection) {
+
+                peerConnection.close();
+
+                peerConnection =
+                    null;
+
+            }
+
+
+            myVideo.srcObject =
+                null;
+
+
+            remoteVideo.srcObject =
+                null;
+
+
+            startBtn.disabled =
+                false;
+
+
+            muteBtn.disabled =
+                true;
+
+
+            cameraBtn.disabled =
+                true;
+
+
+            endBtn.disabled =
+                true;
+
+
+            microphoneOn =
+                true;
+
+
+            cameraOn =
+                true;
+
+
+            muteBtn.innerText =
+                "🎤";
+
+
+            cameraBtn.innerText =
+                "📹";
+
+
+            muteBtn.title =
+                "Mute";
+
+
+            cameraBtn.title =
+                "Camera";
+
+        }
+
+    </script>
+
 
 </body>
+
 </html>
